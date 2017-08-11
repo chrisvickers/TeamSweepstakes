@@ -26,6 +26,10 @@ class UserTableSeeder extends Seeder
                     'name'      =>  $user['name']
                 ]);
             }
+
+            if(!$user->hasRole($exists)){
+                $exists->attachRole($exists);
+            }
         }
 
     }
