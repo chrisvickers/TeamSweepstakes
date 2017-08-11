@@ -36,7 +36,12 @@
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        &nbsp;
+                        @if(Auth::check())
+                            <li><a href="{{ route('bets.index') }}">Bets</a> </li>
+                            <li><a href="{{ route('leaderboard.index') }}">LeaderBoard</a></li>
+                            <li><a href="{{ route('teams.index') }}">Teams</a></li>
+                            <li><a href="{{ route('seasons.index') }}">Seasons</a> </li>
+                        @endif
                     </ul>
 
                     <!-- Right Side Of Navbar -->
