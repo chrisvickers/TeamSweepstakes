@@ -35,7 +35,7 @@ class TeamsController extends Controller
     public function create(Request $request){
 
         $this->middleware('permission:add-teams');
-        
+
         return view(static::TEMPLATE_DIRECTORY . 'create');
 
     }

@@ -25,8 +25,8 @@ class CreateGamesTable extends Migration
             $table->softDeletes();
 
 
-            $table->foreign('home_team_id')->references('id')->on('games');
-            $table->foreign('away_team_id')->references('id')->on('games');
+            $table->foreign('home_team_id')->references('id')->on('teams');
+            $table->foreign('away_team_id')->references('id')->on('teams');
             $table->foreign('season_id')->references('id')->on('seasons');
         });
     }

@@ -17,7 +17,7 @@ class ExampleTest extends TestCase
     public function testBasicTest()
     {
         $response = $this->get('/');
+        $response->assertRedirect(route('bets.index'));
 
-        $response->assertStatus(200);
     }
 }
