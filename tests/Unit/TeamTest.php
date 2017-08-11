@@ -39,7 +39,6 @@ class TeamTest extends TestCase
         $home_team = factory(Team::class)->create();
         $game = factory(Game::class)->create(['home_team_id' => $home_team->id]);
 
-        $this->assertDatabaseHas('games',$game->toArray());
         $this->assertDatabaseHas('teams',$home_team->toArray());
 
         $this->assertTrue($home_team->homeGames->contains(function($home_game) use ($game){
@@ -55,6 +54,8 @@ class TeamTest extends TestCase
         $team = factory(Team::class)->create();
 
         $games = factory(Game::class,5)->create(['home_team_id' => $team->id]);
+
+        $this->assertDatabaseHas('teams',$team->toArray());
 
         $team_games = $team->games();
         $contains = true;
