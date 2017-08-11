@@ -48,4 +48,27 @@ class TeamTest extends TestCase
 
     }
 
+
+    /** @test */
+    public function a_team_has_many_games(){
+
+        $team = factory(Team::class)->create();
+
+        $games = factory(Game::class,5)->create(['home_team_id' => $team->id]);
+
+        $team_games = $team->games();
+        $contains = true;
+
+        $games = $games->pluck('id')->toArray();
+
+        foreach ($team_games as $team_game){
+            if(!in_array($team_game->id,$games)){
+                $contains = false;
+            }
+        }
+
+        $this->assertTrue($contains);
+
+    }
+
 }

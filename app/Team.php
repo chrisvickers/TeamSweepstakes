@@ -38,12 +38,12 @@ class Team extends Model
 
     /**
      * A Team has many Games
-     * @return \Illuminate\Database\Eloquent\Builder|static
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
     public function games()
     {
         return Game::query()->where('home_team_id',$this->id)
-            ->orWhere('away_team_id',$this->id);
+            ->orWhere('away_team_id',$this->id)->get();
     }
 
 }
