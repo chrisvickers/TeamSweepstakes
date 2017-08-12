@@ -18,7 +18,8 @@ class Game extends Model
         'home_team_id',
         'away_team_id',
         'postponed',
-        'nickname'
+        'home_team_score',
+        'away_team_score'
     );
 
 

@@ -39,7 +39,7 @@ class SportsTest extends TestCase
 
         $this->assertTrue($sport->leagues->count() == 5);
 
-        
+
 
     }
 
