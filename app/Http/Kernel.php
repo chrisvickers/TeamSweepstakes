@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\TeamChooser;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -60,7 +61,7 @@ class Kernel extends HttpKernel
         'role' => \Zizaco\Entrust\Middleware\EntrustRole::class,
         'permission' => \Zizaco\Entrust\Middleware\EntrustPermission::class,
         'ability' => \Zizaco\Entrust\Middleware\EntrustAbility::class,
-
+        'teamchooser'   =>  TeamChooser::class,
         'teamowner' => \Mpociot\Teamwork\Middleware\TeamOwner::class,
     ];
 }

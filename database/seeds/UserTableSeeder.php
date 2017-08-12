@@ -27,9 +27,18 @@ class UserTableSeeder extends Seeder
                 ]);
             }
 
-            if(!$user->hasRole($exists)){
-                $exists->attachRole($exists);
+
+            $admin_role = \App\Role::query()->where('name','admin')->first();
+
+            if($admin_role){
+                if(!$exists->hasRole($admin_role->name)) {
+                    $exists->attachRole($admin_role);
+                }
             }
+
+
+
+
         }
 
     }

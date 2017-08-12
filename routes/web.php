@@ -22,14 +22,22 @@ Route::get('/',['as' => 'home', 'uses' => 'HomeController@index']);
 Route::group(['middleware' => 'auth'], function(){
 
 
-    /** Bets */
-    Route::resource('bets','BetsController',[
+    /** Allow Access After they have joined at least one team */
+    Route::group(['middleware' => 'teamchooser'], function(){
+        /** Bets */
+        Route::resource('bets','BetsController',[
 
-    ]);
+        ]);
+
+
+        Route::resource('leagues','LeagueController',[]);
+    });
+
+
 
 
     /** Teams */
-    Route::resource('teams','TeamsController',[
+    Route::resource('sports-teams','SportsTeamsController',[
 
     ]);
 

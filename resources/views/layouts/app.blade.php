@@ -39,8 +39,7 @@
                         @if(Auth::check())
                             <li><a href="{{ route('bets.index') }}">Bets</a> </li>
                             <li><a href="{{ route('leaderboard.index') }}">LeaderBoard</a></li>
-                            <li><a href="{{ route('teams.index') }}">Teams</a></li>
-                            <li><a href="{{ route('seasons.index') }}">Seasons</a> </li>
+                            <li><a href="{{ route('leagues.index') }}">Leagues</a> </li>
                         @endif
                     </ul>
 
@@ -57,6 +56,11 @@
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
+                                    <li>
+                                        <a href="{{ route('teams.index') }}">
+                                            Teams
+                                        </a>
+                                    </li>
                                     <li>
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
@@ -77,6 +81,9 @@
         </nav>
 
         <div class="container">
+
+            @include('partials.alerts')
+
             @yield('content')
         </div>
     </div>

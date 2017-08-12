@@ -37,7 +37,10 @@ class PermissionSeeder extends Seeder
             foreach ($permission as $role){
                 $role = \App\Role::query()->where('name',$role)->first();
                 if($role){
-                    $role->attachPermission($permission_exists);
+                    if(!$role->hasPermission($permission_exists->name)){
+                        $role->attachPermission($permission_exists);
+
+                    }
                 }
             }
 
