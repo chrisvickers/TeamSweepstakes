@@ -7,17 +7,26 @@ use Illuminate\Database\Eloquent\Model;
 class Sport extends Model
 {
 
+    /**
+     * Table
+     * @var string
+     */
     protected $table = 'sports';
 
-
+    /**
+     * Fillable
+     * @var array
+     */
     protected $fillable = array(
         'name',
         'slug'
     );
 
 
-
-
+    /**
+     * Set Slug and Name Attribute
+     * @param $value
+     */
     public function setNameAttribute($value){
 
         $this->attributes['name'] = $value;
@@ -32,6 +41,16 @@ class Sport extends Model
 
         $this->attributes['slug'] = $slugify;
 
+    }
+
+
+    /**
+     * A Sport has many Leagues
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function leagues()
+    {
+        return $this->hasMany(League::class);
     }
 
 }
