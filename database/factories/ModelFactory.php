@@ -24,9 +24,12 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 });
 
 
-$factory->define(\App\Team::class, function(\Faker\Generator $faker){
+$factory->define(\App\SportsTeam::class, function(\Faker\Generator $faker){
 
     return [
+        'league_id' =>  function(){
+        return factory(\App\League::class)->create()->id;
+        },
         'name'  =>  $faker->name,
         'city'  =>  $faker->city,
         'logo_url' =>  $faker->imageUrl()
@@ -46,10 +49,27 @@ $factory->define(\App\Game::class, function(\Faker\Generator $faker){
         'season_id' =>  factory(\App\Season::class)->create()->id,
         'game_time' =>  $faker->dateTime,
         'away_team_id'  =>  function(){
-            return factory(\App\Team::class)->create()->id;
+            return factory(\App\SportsTeam::class)->create()->id;
         },
         'home_team_id'  =>  function(){
-            return factory(\App\Team::class)->create()->id;
+            return factory(\App\SportsTeam::class)->create()->id;
         },
+    ];
+});
+
+
+$factory->define(\App\League::class, function(\Faker\Generator $faker){
+   return [
+       'sport_id'   => function(){
+        return factory(\App\Sport::class)->create()->id;
+       },
+       'name'   =>  $faker->word
+   ];
+});
+
+
+$factory->define(\App\Sport::class, function(\Faker\Generator $faker){
+    return [
+        'name'  =>  $faker->name
     ];
 });

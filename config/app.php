@@ -182,7 +182,7 @@ return [
          * Custom Service Providers
          */
         Zizaco\Entrust\EntrustServiceProvider::class,
-
+        Mpociot\Teamwork\TeamworkServiceProvider::class,
     ],
 
     /*

@@ -4,12 +4,13 @@ namespace Tests\Unit;
 
 use App\Game;
 use App\Season;
+use App\SportsTeam;
 use App\Team;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class TeamTest extends TestCase
+class SportTeamTest extends TestCase
 {
     use DatabaseMigrations;
 
@@ -17,12 +18,12 @@ class TeamTest extends TestCase
     public function a_team_has_an_away_game(){
 
 
-        $away_team = factory(Team::class)->create();
+        $away_team = factory(SportsTeam::class)->create();
         $game = factory(Game::class)->create(['away_team_id' => $away_team->id]);
 
         $this->assertDatabaseHas('games',$game->toarray());
 
-        $this->assertDatabaseHas('teams',$away_team->toArray());
+        $this->assertDatabaseHas('sports_teams',$away_team->toArray());
 
         $this->assertTrue($away_team->awayGames->contains(function($away_game) use ($game){
             return $away_game->id == $game->id;
@@ -36,10 +37,10 @@ class TeamTest extends TestCase
     public function a_team_has_a_home_game(){
 
 
-        $home_team = factory(Team::class)->create();
+        $home_team = factory(SportsTeam::class)->create();
         $game = factory(Game::class)->create(['home_team_id' => $home_team->id]);
 
-        $this->assertDatabaseHas('teams',$home_team->toArray());
+        $this->assertDatabaseHas('sports_teams',$home_team->toArray());
 
         $this->assertTrue($home_team->homeGames->contains(function($home_game) use ($game){
             return $home_game->id == $game->id;
@@ -51,11 +52,11 @@ class TeamTest extends TestCase
     /** @test */
     public function a_team_has_many_games(){
 
-        $team = factory(Team::class)->create();
+        $team = factory(SportsTeam::class)->create();
 
         $games = factory(Game::class,5)->create(['home_team_id' => $team->id]);
 
-        $this->assertDatabaseHas('teams',$team->toArray());
+        $this->assertDatabaseHas('sports_teams',$team->toArray());
 
         $team_games = $team->games();
         $contains = true;
