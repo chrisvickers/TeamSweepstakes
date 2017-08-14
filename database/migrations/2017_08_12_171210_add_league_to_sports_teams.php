@@ -30,7 +30,8 @@ class AddLeagueToSportsTeams extends Migration
     public function down()
     {
         Schema::table('sports_teams', function (Blueprint $table){
-
+            $table->dropForeign('sports_teams_league_id_foreign');
+            $table->dropColumn('league_id');
         });
     }
 }

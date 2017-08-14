@@ -10,6 +10,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class SportsTest extends TestCase
 {
+    use DatabaseMigrations;
 
     /** @test */
     public function a_sport_has_a_league(){

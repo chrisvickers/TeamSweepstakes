@@ -40,11 +40,12 @@ class ChangeGames extends Migration
     public function down()
     {
         Schema::table('games', function (Blueprint $table){
-            $table->dropForeign('week_id');
+            $table->dropForeign('games_week_id_foreign');
+            $table->dropColumn('week_id');
         });
 
         Schema::table('games', function (Blueprint $table){
-            $table->dropColumn('day_if_week');
+            $table->dropColumn('day_of_week');
             $table->dateTime('game_time')->after('id')->nullable();
         });
 

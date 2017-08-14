@@ -11,6 +11,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class WeekTest extends TestCase
 {
+    use DatabaseMigrations;
     /** @test */
     public function a_week_has_many_seasons(){
 
