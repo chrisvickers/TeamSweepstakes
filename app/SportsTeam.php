@@ -11,6 +11,7 @@ class SportsTeam extends Model
 
 
     protected $fillable = array(
+        'league_id',
         'name',
         'city',
         'logo_url'
@@ -44,6 +45,15 @@ class SportsTeam extends Model
     {
         return Game::query()->where('home_team_id',$this->id)
             ->orWhere('away_team_id',$this->id)->get();
+    }
+
+    /**
+     * A Sport Team belongs to a League
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function league()
+    {
+        return $this->belongsTo(League::class);
     }
 
 }

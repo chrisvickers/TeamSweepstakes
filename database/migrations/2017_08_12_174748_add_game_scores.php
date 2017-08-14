@@ -17,8 +17,8 @@ class AddGameScores extends Migration
         Schema::table('games', function (Blueprint $table){
             $table->dropColumn('nickname');
 
-            $table->integer('home_team_score')->nullable();
-            $table->integer('away_team_score')->nullable();
+            $table->integer('home_team_score')->nullable()->after('postponed');
+            $table->integer('away_team_score')->nullable()->after('postponed');
         });
 
     }

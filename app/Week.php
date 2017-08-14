@@ -22,4 +22,14 @@ class Week extends Model
     {
         return $this->hasMany(Game::class);
     }
+
+
+    /**
+     * a Week has many Seasons
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function seasons()
+    {
+        return $this->belongsToMany(Season::class);
+    }
 }

@@ -46,8 +46,11 @@ $factory->define(\App\Season::class, function(\Faker\Generator $faker){
 
 $factory->define(\App\Game::class, function(\Faker\Generator $faker){
     return [
+        'week_id'   =>  function(){
+            return factory(\App\Week::class)->create()->id;
+        },
         'season_id' =>  factory(\App\Season::class)->create()->id,
-        'game_time' =>  $faker->dateTime,
+        'day_of_week' =>  $faker->numberBetween(0,6),
         'away_team_id'  =>  function(){
             return factory(\App\SportsTeam::class)->create()->id;
         },
@@ -72,4 +75,11 @@ $factory->define(\App\Sport::class, function(\Faker\Generator $faker){
     return [
         'name'  =>  $faker->name
     ];
+});
+
+
+$factory->define(\App\Week::class, function(\Faker\Generator $faker){
+   return [
+       'week'   =>  $faker->word
+   ];
 });

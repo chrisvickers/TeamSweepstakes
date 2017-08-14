@@ -26,4 +26,10 @@ class Season extends Model
     {
         return $this->hasMany(Game::class);
     }
+
+
+    public function weeks()
+    {
+        return $this->belongsToMany(Week::class);
+    }
 }
