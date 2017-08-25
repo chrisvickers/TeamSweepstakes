@@ -176,4 +176,26 @@ class BetTest extends TestCase
         $this->assertTrue($game->didUserWin($user) === true);
 
     }
+
+
+    /** @test */
+    public function a_user_can_only_bet_once(){
+
+        $user = factory(User::class)->create();
+        $game = factory(Game::class)->create();
+
+        $first_bet = factory(Bet::class)->create(['user_id' => $user->id, 'game_id' => $game->id]);
+
+        $added_second_bet = false;
+
+        try{
+            factory(Bet::class)->create(['user_id' => $user->id, 'game_id' => $game->id]);
+            $added_second_bet = true;
+        }catch (\PDOException $exception){
+
+        }
+
+        $this->assertTrue($added_second_bet == false);
+
+    }
 }
