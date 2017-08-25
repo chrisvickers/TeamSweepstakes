@@ -28,4 +28,14 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+
+    /**
+     * A User has many bets
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function bets()
+    {
+        return $this->hasMany(Bet::class);
+    }
 }

@@ -83,3 +83,19 @@ $factory->define(\App\Week::class, function(\Faker\Generator $faker){
        'week'   =>  $faker->word
    ];
 });
+
+
+$factory->define(\App\Bet::class, function(\Faker\Generator $faker){
+    return [
+        'user_id'           =>  function(){
+            return factory(\App\User::class)->create()->id;
+        },
+        'game_id'           =>  function(){
+            return factory(\App\Game::class)->create()->id;
+        },
+        'home_team_win'     =>  false,
+        'away_team_win'     =>  false,
+        'home_team_score'   =>  0,
+        'away_team_score'   =>  0
+    ];
+});

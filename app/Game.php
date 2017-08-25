@@ -56,4 +56,42 @@ class Game extends Model
         return $this->belongsTo(SportsTeam::class,'home_team_id');
     }
 
+
+    /**
+     * A Game has many Bets
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function bets()
+    {
+        return $this->hasMany(Bet::class);
+    }
+
+
+    /**
+     * Return the Winning Team if there is one
+     * @return mixed|null
+     */
+    public function winningTeam()
+    {
+        if($this->home_team_score !== $this->away_team_score){
+            $winning_team = $this->home_team_score > $this->away_team_score ? 'homeTeam' : 'awayTeam';
+            return $this->{$winning_team};
+        }
+        return null;
+    }
+
+
+    /**
+     * Return the Losing Team if there is one
+     * @return mixed|null
+     */
+    public function losingTeam(){
+        $winning_team = $this->winningTeam();
+        if($winning_team != null){
+            return $this->homeTeam->id == $winning_team->id ? $this->awayTeam : $this->homeTeam;
+        }
+        return null;
+    }
+
+
 }
