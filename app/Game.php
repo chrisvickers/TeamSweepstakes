@@ -85,7 +85,8 @@ class Game extends Model
      * Return the Losing Team if there is one
      * @return mixed|null
      */
-    public function losingTeam(){
+    public function losingTeam()
+    {
         $winning_team = $this->winningTeam();
         if($winning_team != null){
             return $this->homeTeam->id == $winning_team->id ? $this->awayTeam : $this->homeTeam;
@@ -94,4 +95,67 @@ class Game extends Model
     }
 
 
+    /**
+     * A Game has a List of Winning Users
+     * @return \Illuminate\Support\Collection
+     */
+    public function winningUsers()
+    {
+        $winning_team = $this->winningTeam();
+        if($winning_team != null){
+            if($winning_team->id == $this->homeTeam->id){
+                $users = $this->bets()->where('home_team_win',true)->get()->pluck('user');
+            }else{
+                $users = $this->bets()->where('away_team_win',true)->get()->pluck('user');
+            }
+            return $users;
+        }
+
+        return collect();
+    }
+
+
+    /**
+     * A Game has a list of Losing Users
+     * @return \Illuminate\Support\Collection
+     */
+    public function losingUsers()
+    {
+        $losing_team = $this->losingTeam();
+        if($losing_team != null){
+            if($losing_team->id == $this->homeTeam->id){
+                $users = $this->bets()->where('home_team_win',false)->get()->pluck('user');
+            }else{
+                $users = $this->bets()->where('away_team_win',false)->get()->pluck('user');
+            }
+            return $users;
+        }
+        return collect();
+    }
+
+
+    /**
+     * Did a User Bet
+     * @param User $user
+     * @return bool
+     */
+    public function didUserBet(User $user)
+    {
+        return $this->bets()->where('user_id', $user->id)->exists();
+    }
+
+
+    /**
+     * Did a User win the bet
+     * @param User $user
+     * @return bool
+     */
+    public function didUserWin(User $user){
+        if($this->didUserBet($user)){
+            return $this->winningUsers()->contains(function($winning_user) use ($user){
+                return $winning_user->id == $user->id;
+            });
+        }
+        return false;
+    }
 }

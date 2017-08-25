@@ -102,21 +102,78 @@ class BetTest extends TestCase
 
 
 
+    /** @test */
     public function a_bet_has_a_list_of_users_who_won(){
 
+        $winning_users = factory(User::class,5)->create();
+        $losing_users = factory(User::class,5)->create();
+
+        $game = factory(Game::class)->create(['home_team_score' => 30, 'away_team_score' => 10]);
+
+        foreach ($winning_users as $winning_user){
+            factory(Bet::class)->create(['game_id' => $game->id,'home_team_win' => 1,'user_id' => $winning_user->id]);
+        }
+
+        foreach ($losing_users as $losing_user){
+            factory(Bet::class)->create(['game_id' => $game->id, 'away_team_win' => 1,'user_id' => $losing_user->id]);
+        }
+
+        $this->assertTrue($game->winningUsers()->count() == $winning_users->count());
+
+        foreach ($winning_users as $key => $winning_user){
+            foreach ($game->winningusers() as $winninguser){
+                if($winninguser->id == $winning_user->id){
+                    unset($winning_users[$key]);
+                }
+            }
+        }
+
+        $this->assertTrue($winning_users->count() == 0);
 
     }
 
 
+    /** @test */
     public function a_bet_has_a_list_of_users_who_lost(){
 
+        $winning_users = factory(User::class,5)->create();
+        $losing_users = factory(User::class,5)->create();
+
+        $game = factory(Game::class)->create(['home_team_score' => 30, 'away_team_score' => 10]);
+
+        foreach ($winning_users as $winning_user){
+            factory(Bet::class)->create(['game_id' => $game->id,'home_team_win' => 1,'user_id' => $winning_user->id]);
+        }
+
+        foreach ($losing_users as $losing_user){
+            factory(Bet::class)->create(['game_id' => $game->id, 'away_team_win' => 1,'user_id' => $losing_user->id]);
+        }
+
+        $this->assertTrue($game->losingUsers()->count() == $losing_users->count());
+
+    }
+
+    /** @test */
+    public function did_a_user_bet(){
+
+        $user = factory(User::class)->create();
+        $game = factory(Game::class)->create();
+        factory(Bet::class)->create(['user_id' => $user->id, 'game_id' => $game->id]);
+
+
+        $this->assertTrue($game->didUserBet($user) === true);
 
     }
 
 
-
+    /** @test */
     public function did_a_user_win_this_bet(){
 
+        $user = factory(User::class)->create();
+        $game = factory(Game::class)->create(['home_team_score' => 30, 'away_team_score' => 10]);
+        factory(Bet::class)->create(['user_id' => $user->id, 'game_id' => $game->id, 'home_team_win' => true]);
+
+        $this->assertTrue($game->didUserWin($user) === true);
 
     }
 }

@@ -23,6 +23,9 @@ class Bet extends Model
     );
 
 
+    protected $with = ['user','game'];
+
+
     /**
      * A Bet belongs to a User
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -70,6 +73,16 @@ class Bet extends Model
     public function winningTeam()
     {
         return $this->game->winningTeam();
+    }
+
+
+    /**
+     * A Bet has a Losing Team
+     * @return mixed
+     */
+    public function losingTeam()
+    {
+        return $this->game->losingTeam();
     }
 
 
