@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Admins;
 
 
 use App\Http\Controllers\Controller;
-use App\League;
 use App\Sport;
+use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 
 class SportsController extends Controller
@@ -43,6 +43,21 @@ class SportsController extends Controller
 
 
     /**
+     * Edit a Sport
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function edit(Request $request, $id){
+
+        $sport = Sport::query()->findOrFail($id);
+
+        return view(static::TEMPLATE_DIRECTORY . 'edit',compact('sport'));
+
+    }
+
+
+    /**
      * Store a Sport
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
@@ -57,6 +72,28 @@ class SportsController extends Controller
 
         return redirect()->route('admins.sports.index')
             ->with('success','Sport Created');
+    }
+
+
+    /**
+     * Update a Sport
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(Request $request, $id)
+    {
+        $rules = array(
+            'name'  =>  Rule::unique('sports')->ignore($id,'id')
+        );
+        $this->validate($request, $rules);
+        $sport = Sport::query()->findOrFail($id);
+
+        $sport->fill($request->all());
+        $sport->save();
+
+        return redirect()->route('admins.sports.index')
+            ->with('success','Sport Updated');
     }
 
 

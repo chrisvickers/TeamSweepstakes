@@ -3,11 +3,8 @@
 namespace Tests\Feature;
 
 use App\League;
-use App\Role;
 use App\Sport;
-use App\Team;
 use App\User;
-use Artisan;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -17,25 +14,6 @@ class AdminLeagueTest extends TestCase
 {
     use DatabaseMigrations;
 
-
-    protected $admin_role, $team;
-
-    public function setUp()
-    {
-        parent::setUp();
-        $this->artisan('db:seed');
-        $this->admin_role = Role::where('name','admin')->first();
-        $this->team = Team::query()->where('name','Super Team')->firstOrCreate([
-            'name'  =>  'Super Team'
-        ]);
-    }
-
-
-    private function adminUser(){
-        $user = factory(User::class)->create();
-        $user->roles()->attach($this->admin_role);
-        return $user;
-    }
 
     /** @test */
     public function only_an_admin_can_access_leagues(){
@@ -62,6 +40,7 @@ class AdminLeagueTest extends TestCase
     }
 
 
+
     /** @test */
     public function can_see_leagues_on_index(){
 
@@ -72,6 +51,17 @@ class AdminLeagueTest extends TestCase
             ->assertSee($league->name);
 
 
+    }
+
+
+    /** @test */
+    public function a_user_cannot_add_a_league_until_there_is_one_sport()
+    {
+
+        $user = $this->adminUser();
+
+        $this->actingAs($user)->get(route('admins.leagues.create'))
+            ->assertRedirect(route('admins.sports.create'));
     }
 
 

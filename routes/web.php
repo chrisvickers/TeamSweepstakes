@@ -82,6 +82,7 @@ Route::group(['middleware' => 'auth'], function(){
 
         /** Sports */
         Route::resource('sports','Admins\SportsController',[
+            'except'    =>  ['show']
         ]);
 
         /** Leagues */

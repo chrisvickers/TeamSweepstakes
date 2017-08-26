@@ -20,6 +20,9 @@
             <td>{{ $sport->leagues->count() }}</td>
             <td>
                 <a href="{{ route('admins.sports.edit',['id' => $sport->id]) }}" class="btn btn-primary">Edit</a>
+                {{ Form::open(array('method' => 'delete', 'route' => array('admins.sports.destroy', $sport->id))) }}
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                {{ Form::close() }}
             </td>
         </tr>
     @endforeach
