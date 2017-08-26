@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\League;
 use App\Role;
+use App\Sport;
 use App\Team;
 use App\User;
 use Artisan;
@@ -77,6 +78,23 @@ class AdminLeagueTest extends TestCase
     /** @test */
     public function a_user_can_add_a_league(){
 
+        $user = $this->adminUser();
+        $sport = factory(Sport::class)->create();
+
+        $this->actingAs($user)->get(route('admins.leagues.create'))
+            ->assertSuccessful();
+
+        $league = factory(League::class)->make([
+            'sport_id'  =>  $sport->id
+        ]);
+
+        $this->actingAs($user)->post(route('admins.leagues.store'),[
+            'name'  =>  $league->name,
+            'sport_id'  =>  $league->sport_id
+        ])->assertRedirect(route('admins.leagues.index'));
+
+        $this->assertDatabaseHas('leagues',$league->toArray());
+
 
     }
 
@@ -84,6 +102,19 @@ class AdminLeagueTest extends TestCase
     /** @test */
     public function a_user_can_edit_a_league(){
 
+        $user = $this->adminUser();
+        $league = factory(League::class)->create();
+
+        $this->actingAs($user)->get(route('admins.leagues.edit', ['id' => $league->id]))
+            ->assertSuccessful()
+            ->assertSee($league->name);
+
+        $new_league = factory(League::class)->make();
+
+        $this->actingAs($user)->patch(route('admins.leagues.update',['id' => $league->id]),[
+            'name'  =>  $new_league->name,
+            'sport_id'  =>  $league->sport_id
+        ])->assertRedirect(route('admins.leagues.index'));
 
     }
 
