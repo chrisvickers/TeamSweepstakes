@@ -71,6 +71,27 @@ Route::group(['middleware' => 'auth'], function(){
 
     });
 
+
+    /** Admins */
+    Route::group(['prefix' => 'admins', 'middleware' => 'admin', 'as' => 'admins.'], function(){
+
+        /** Games */
+        Route::resource('games','Admins\GamesController',[
+            'only'  =>  ['index']
+        ]);
+
+        /** Sports */
+        Route::resource('sports','Admins\SportsController',[
+            'only'  =>  ['index']
+        ]);
+
+        /** Leagues */
+        Route::resource('leagues','Admins\LeaguesController',[
+            'only'  =>  ['index']
+        ]);
+
+    });
+
 });
 
 /**

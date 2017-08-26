@@ -32,7 +32,7 @@ class UserTableSeeder extends Seeder
 
             if($admin_role){
                 if(!$exists->hasRole($admin_role->name)) {
-                    $exists->attachRole($admin_role);
+                    $exists->roles()->attach($admin_role);
                 }
             }
 

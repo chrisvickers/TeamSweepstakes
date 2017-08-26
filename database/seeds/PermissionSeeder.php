@@ -18,6 +18,22 @@ class PermissionSeeder extends Seeder
             ],
             'Edit Teams'    =>  [
                 'admin'
+            ],
+
+            'Add Leagues' => [
+                'admin'
+            ],
+
+            'Edit Leagues'  =>  [
+                'admin'
+            ],
+
+            'Add Sports'    =>  [
+                'admin'
+            ],
+
+            'Edit Sports'   =>  [
+                'admin'
             ]
 
         );
