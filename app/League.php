@@ -26,6 +26,9 @@ class League extends Model
     );
 
 
+//    protected $with = ['sport'];
+
+
     /**
      * A League belongs to a sport
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

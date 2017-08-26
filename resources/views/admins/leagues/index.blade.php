@@ -12,6 +12,18 @@
             </a>
         </div>
 
+
+        <div class="panel-body">
+
+            <div class="table-responsive">
+
+                @include('leagues._table',['leagues' => $leagues])
+
+                {{ $leagues->links() }}
+
+            </div>
+
+        </div>
     </div>
 
 @stop

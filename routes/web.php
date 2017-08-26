@@ -86,6 +86,12 @@ Route::group(['middleware' => 'auth'], function(){
 
         /** Leagues */
         Route::resource('leagues','Admins\LeaguesController',[
+            'except'    =>  ['show']
+        ]);
+
+        /** Teams */
+        Route::resource('teams','Admins\TeamsController',[
+
         ]);
 
     });

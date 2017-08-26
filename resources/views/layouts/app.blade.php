@@ -59,8 +59,9 @@
                                         Admin <span class="caret"></span>
                                     </a>
                                     <ul class="dropdown-menu">
-                                        <li><a href="{{ route('admins.sports.index') }}">Sports</a></li>
+                                        <li><a href="{{ route('admins.teams.index') }}">Teams</a> </li>
                                         <li><a href="{{ route('admins.leagues.index') }}">Leagues</a></li>
+                                        <li><a href="{{ route('admins.sports.index') }}">Sports</a></li>
                                     </ul>
                                 </li>
                             @endif

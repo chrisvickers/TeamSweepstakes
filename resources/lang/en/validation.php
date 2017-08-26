@@ -116,6 +116,8 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'sport_id'  =>  'sport'
+    ],
 
 ];

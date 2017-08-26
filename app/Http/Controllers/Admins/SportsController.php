@@ -46,7 +46,11 @@ class SportsController extends Controller
     }
 
 
-
+    /**
+     * Store a Sport
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(Request $request){
 
         $this->validate($request,static::RULES);

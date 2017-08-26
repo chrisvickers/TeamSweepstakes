@@ -1,6 +1,5 @@
 @extends('layouts.app')
 
-
 @section('content')
 
     <div class="row">
@@ -9,19 +8,19 @@
 
             <div class="panel panel-default">
 
-                <div class="panel-heading">
-                    Add League
+                <div class="panel-heading clearfix">
+                    League - {{ $league->name }}
                 </div>
 
 
                 <div class="panel-body">
 
-                    {{ Form::open(['method' => 'post', 'route' => 'admins.leagues.store']) }}
+                    {{ Form::open(['method' => 'patch', 'route' => ['admins.leagues.update', $league->id]]) }}
 
                     @include('leagues._form')
 
                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary text-right">Add League</button>
+                        <button type="submit" class="btn btn-primary">Update League</button>
                     </div>
 
                     {{ Form::close() }}
