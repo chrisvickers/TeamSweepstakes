@@ -97,4 +97,22 @@ class SportsController extends Controller
     }
 
 
+    /**
+     * Destroy a Sport
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy(Request $request, $id){
+
+        $sport = Sport::query()->findOrFail($id);
+
+        $sport->delete();
+
+        return redirect()->route('admins.sports.index')
+            ->with('success','Sport Deleted');
+
+    }
+
+
 }

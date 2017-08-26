@@ -102,8 +102,7 @@ class AdminSportTest extends TestCase
             'id'    =>  $sport->id,
         ]);
 
-        $sport->refresh();
-
+        $sport = Sport::withTrashed()->find($sport->id);
         $this->assertTrue($sport->deleted_at != null);
     }
 
