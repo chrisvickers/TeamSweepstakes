@@ -52,6 +52,25 @@ Route::group(['middleware' => 'auth'], function(){
         'only'  =>  ['index']
     ]);
 
+
+    /** Owners */
+    Route::group(['prefix' => 'owners', 'middleware' => 'teamowner', 'as' => 'owners.'], function(){
+
+        /** Bets */
+        Route::resource('bets', 'Owners\BetsController',[
+            'only'  =>  ['index']
+        ]);
+
+
+        /** Games */
+        Route::resource('games', 'Owners\GamesController',[
+            'only'  =>  ['index']
+        ]);
+
+
+
+    });
+
 });
 
 /**

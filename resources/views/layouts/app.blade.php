@@ -39,7 +39,32 @@
                         @if(Auth::check())
                             <li><a href="{{ route('bets.index') }}">Bets</a> </li>
                             <li><a href="{{ route('leaderboard.index') }}">LeaderBoard</a></li>
-                            <li><a href="{{ route('leagues.index') }}">Leagues</a> </li>
+
+                            @if(Auth::user()->isTeamOwner())
+                                <li role="presentation" class="dropdown">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                                        Team Owner <span class="caret"></span>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="{{ route('owners.bets.index') }}">Team Bets</a></li>
+                                        <li><a href="{{ route('owners.games.index') }}">Games</a></li>
+                                    </ul>
+                                </li>
+                            @endif
+
+
+                            @if(Auth::user()->hasRole('admin'))
+                                <li role="presentation" class="dropdown">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                                        Admin <span class="caret"></span>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li>Sports</li>
+                                        <li>Leagues</li>
+                                    </ul>
+                                </li>
+                            @endif
+
                         @endif
                     </ul>
 
