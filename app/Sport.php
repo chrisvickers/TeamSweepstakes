@@ -23,6 +23,9 @@ class Sport extends Model
     );
 
 
+    protected $with = ['leagues'];
+
+
     /**
      * Set Slug and Name Attribute
      * @param $value

@@ -63,5 +63,6 @@ class Kernel extends HttpKernel
         'ability' => \Zizaco\Entrust\Middleware\EntrustAbility::class,
         'teamchooser'   =>  TeamChooser::class,
         'teamowner' => \Mpociot\Teamwork\Middleware\TeamOwner::class,
+        'admins'    =>  Middleware\AdminsOnly::class
     ];
 }
