@@ -24,13 +24,10 @@ class SportsController extends Controller
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(Request $request){
-
+    public function index(Request $request)
+    {
         $sports = Sport::query()->paginate(10);
-
-
         return view(static::TEMPLATE_DIRECTORY . 'index',compact('sports'));
-
     }
 
 
@@ -39,10 +36,9 @@ class SportsController extends Controller
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
-    public function create(Request $request){
-
+    public function create(Request $request)
+    {
         return view(static::TEMPLATE_DIRECTORY . 'create');
-
     }
 
 
@@ -51,14 +47,13 @@ class SportsController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request){
-
+    public function store(Request $request)
+    {
         $this->validate($request,static::RULES);
 
-        $sport = Sport::query()->create([
+        Sport::query()->create([
             'name'  =>  $request->get('name')
         ]);
-
 
         return redirect()->route('admins.sports.index')
             ->with('success','Sport Created');

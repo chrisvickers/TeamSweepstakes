@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: chrisvickers
- * Date: 8/25/17
- * Time: 8:22 PM
- */
 
 namespace App\Http\Controllers\Admins;
 
@@ -67,7 +61,7 @@ class LeaguesController extends Controller
 
         $this->validate($request,static::RULES);
 
-        $league = League::query()->create($request->only(['name','sport_id']));
+        League::query()->create($request->only(['name','sport_id']));
 
         return redirect()->route('admins.leagues.index')
             ->with('success','League Created');
@@ -90,8 +84,14 @@ class LeaguesController extends Controller
     }
 
 
-
-    public function update(Request $request, $id){
+    /**
+     * Update a League
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(Request $request, $id)
+    {
 
         $rules = [
             'name'  =>  Rule::unique('leagues')->ignore($id),
