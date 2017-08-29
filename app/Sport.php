@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Closure;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -27,6 +28,18 @@ class Sport extends Model
 
     protected $with = ['leagues'];
 
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::deleted(function($sport) {
+
+            League::query()->where('sport_id',$sport->id)
+                ->delete();
+
+        });
+    }
 
     /**
      * Set Slug and Name Attribute
