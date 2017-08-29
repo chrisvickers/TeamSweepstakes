@@ -10,18 +10,18 @@
             <div class="panel panel-default">
 
                 <div class="panel-heading">
-                    Add Sport
+                    Add Sports Team
                 </div>
 
 
                 <div class="panel-body">
 
-                    {{ Form::open(['method' => 'post', 'route' => 'admins.sports.store']) }}
+                    {{ Form::open(['method' => 'post', 'route' => 'admins.teams.store']) }}
 
-                    @include('sports._form')
+                    @include('sports-teams._form')
 
                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary text-right">Add Sport</button>
+                        <button type="submit" class="btn btn-primary text-right">Add Sports Team</button>
                     </div>
 
                     {{ Form::close() }}
