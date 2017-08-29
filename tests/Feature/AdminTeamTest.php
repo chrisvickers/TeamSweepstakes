@@ -3,6 +3,8 @@
 namespace Tests\Feature;
 
 
+use App\League;
+use App\SportsTeam;
 use App\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -25,7 +27,6 @@ class AdminTeamTest extends TestCase
     public function an_admin_can_access_teams()
     {
         $user = $this->adminUser();
-
         $this->actingAs($user)->get(route('admins.teams.index'))
             ->assertSuccessful();
     }
@@ -34,28 +35,46 @@ class AdminTeamTest extends TestCase
     /** @test */
     public function a_user_cannot_access_teams()
     {
-
         $user = factory(User::class)->create();
-
         $this->actingAs($user)->get(route('admins.teams.index'))
             ->assertStatus(404);
-
     }
 
 
     /** @test */
     public function a_user_can_see_teams()
     {
-
-
+        $user = $this->adminUser();
+        $team = factory(SportsTeam::class)->create();
+        $this->actingAs($user)->get(route('admins.teams.index'))
+            ->assertSuccessful()
+            ->assertSee(htmlentities($team->name))
+            ->assertSee(htmlentities($team->city));
     }
 
 
     /** @test */
     public function a_user_can_create_a_team()
     {
+        $user = $this->adminUser();
+
+        $this->actingAs($user)->get(route('admins.teams.create'))
+            ->assertSuccessful();
+
+        $team = factory(SportsTeam::class)->make();
+        $league = factory(League::class)->create();
+
+        $this->actingAs($user)->post(route('admins.teams.store'),[
+            'name'      =>  $team->name,
+            'city'      =>  $team->city,
+            'league_id' =>  $league->id
+        ])->assertRedirect(route('admins.teams.index'));
 
 
+        $this->assertDatabaseHas('sports_teams',[
+            'name'  =>  $team->name,
+            'city'  =>  $team->city
+        ]);
     }
 
 
