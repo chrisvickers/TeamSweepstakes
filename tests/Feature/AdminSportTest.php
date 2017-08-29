@@ -13,6 +13,11 @@ class AdminSportTest extends TestCase
 {
     use DatabaseMigrations;
 
+    public function setUp()
+    {
+        parent::setUp();
+        $this->adminSetup();
+    }
 
     /** @test */
     public function a_user_cannot_access_this_page()
@@ -41,7 +46,7 @@ class AdminSportTest extends TestCase
 
         $this->actingAs($user)->get(route('admins.sports.index'))
             ->assertSuccessful()
-            ->assertSee($sport->name);
+            ->assertSee(htmlentities($sport->name));
     }
 
 

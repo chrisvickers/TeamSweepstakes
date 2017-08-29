@@ -111,4 +111,22 @@ class LeaguesController extends Controller
     }
 
 
+    /**
+     * Delete a League
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy(Request $request, $id){
+
+        $league = League::query()->findOrFail($id);
+
+        $league->delete();
+
+        return redirect()->route('admins.leagues.index')
+            ->with('success','League Deleted');
+
+    }
+
+
 }

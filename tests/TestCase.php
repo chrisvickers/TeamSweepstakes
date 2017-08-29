@@ -14,16 +14,13 @@ abstract class TestCase extends BaseTestCase
     protected $admin_role, $team;
 
 
-    public function setUp()
-    {
-        parent::setUp();
+    public function adminSetup(){
         $this->artisan('db:seed');
         $this->admin_role = Role::where('name','admin')->first();
         $this->team = Team::query()->where('name','Super Team')->firstOrCreate([
             'name'  =>  'Super Team'
         ]);
     }
-
 
     public function adminUser(){
         $user = factory(User::class)->create();

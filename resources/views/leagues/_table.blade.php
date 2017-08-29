@@ -18,7 +18,10 @@
             <td>{{ $league->name }}</td>
             <td>{{ $league->sport->name }}</td>
             <td>
-                <a href="{{ route('admins.leagues.edit',['id' => $league->id]) }}" class="btn btn-primary">Edit</a>
+                <a href="{{ route('admins.leagues.edit',['id' => $league->id]) }}" class="btn btn-primary btn-sm">Edit</a>
+                {{ Form::open(array('method' => 'delete', 'route' => array('admins.leagues.destroy',$league->id))) }}
+                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                {{ Form::close() }}
             </td>
         </tr>
     @endforeach

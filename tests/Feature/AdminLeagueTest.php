@@ -15,6 +15,13 @@ class AdminLeagueTest extends TestCase
     use DatabaseMigrations;
 
 
+    public function setUp()
+    {
+        parent::setUp();
+        $this->adminSetup();
+    }
+
+
     /** @test */
     public function only_an_admin_can_access_leagues(){
 
@@ -105,6 +112,22 @@ class AdminLeagueTest extends TestCase
             'name'  =>  $new_league->name,
             'sport_id'  =>  $league->sport_id
         ])->assertRedirect(route('admins.leagues.index'));
+
+    }
+
+
+
+    /** @test */
+    public function a_user_can_delete_a_league(){
+
+        $user = $this->adminUser();
+
+        $league = factory(League::class)->create();
+
+        $this->actingAs($user)->delete(route('admins.leagues.destroy', array('id' => $league->id)))
+            ->assertRedirect(route('admins.leagues.index'));
+
+        $this->assertFalse(League::query()->where('id',$league->id)->exists());
 
     }
 
