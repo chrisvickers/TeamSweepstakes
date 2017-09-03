@@ -16,7 +16,7 @@
                 <a href="{{ route('admins.leagues.edit',['id' => $league->id]) }}">{{ $league->id }}</a>
             </td>
             <td>{{ $league->name }}</td>
-            <td>{{ $league->sport->name }}</td>
+            <td>{{ $league->sport != null ? $league->sport->name : 'N/A' }}</td>
             <td>
                 <a href="{{ route('admins.leagues.edit',['id' => $league->id]) }}" class="btn btn-primary btn-sm">Edit</a>
                 {{ Form::open(array('method' => 'delete', 'route' => array('admins.leagues.destroy',$league->id))) }}

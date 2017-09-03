@@ -26,8 +26,14 @@ class League extends Model
     );
 
 
-//    protected $with = ['sport'];
+    public static function boot()
+    {
+        parent::boot();
 
+        static::deleted(function($league){
+            SportsTeam::query()->where('league_id',$league->id)->delete();
+        });
+    }
 
     /**
      * A League belongs to a sport

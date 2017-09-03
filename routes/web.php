@@ -77,7 +77,7 @@ Route::group(['middleware' => 'auth'], function(){
 
         /** Games */
         Route::resource('games','Admins\GamesController',[
-            'only'  =>  ['index']
+            'except'  =>  ['show']
         ]);
 
         /** Sports */
@@ -92,6 +92,11 @@ Route::group(['middleware' => 'auth'], function(){
 
         /** Teams */
         Route::resource('teams','Admins\TeamsController',[
+
+        ]);
+
+        /** Seasons */
+        Route::resource('seasons','Admins\SeasonsController',[
 
         ]);
 
