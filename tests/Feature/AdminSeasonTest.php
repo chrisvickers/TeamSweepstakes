@@ -39,8 +39,22 @@ class AdminSeasonTest extends TestCase
         $this->actingAs($user)->get(route('admins.seasons.index'))
             ->assertSuccessful()
             ->assertSee($season->year);
+    }
 
 
+    /** @test */
+    public function an_admin_can_add_a_seasons()
+    {
+        $user = $this->adminUser();
+        $new_season = factory(Season::class)->make();
+
+        $this->actingAs($user)->post(route('admins.seasons.store'),[
+            'year'  =>  $new_season->year
+        ])->assertRedirect(route('admins.seasons.index'));
+
+        $this->assertDatabaseHas('seasons',[
+            'year'  =>  $new_season->year
+        ]);
     }
 
 }
