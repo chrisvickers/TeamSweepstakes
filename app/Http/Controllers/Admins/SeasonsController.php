@@ -59,4 +59,20 @@ class SeasonsController extends Controller
 
     }
 
+
+    /**
+     * Edit a Season
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function edit(Request $request, $id)
+    {
+        $season = Season::query()->findOrFail($id);
+        $weeks = Week::all();
+
+        return view(static::TEMPLATE_DIRECTORY . 'edit', compact('season','weeks'));
+    }
+
+
 }

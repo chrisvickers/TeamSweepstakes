@@ -86,6 +86,16 @@ Route::group(['middleware' => 'auth'], function(){
         ]);
 
         /** Leagues */
+        Route::group(['prefix' => 'leagues', 'as' => 'leagues.'], function() {
+
+            Route::group(['prefix' => '{id}/seasons', 'as' => 'seasons.'], function(){
+
+                Route::post('update', array('as' => 'update', 'uses' => 'Admins\LeaguesController@updateSeasons'));
+                Route::delete('destroy-all',array('as' => 'destroy-all', 'uses' => 'Admins\LeaguesController@destroyAllSeasons'));
+
+            });
+
+        });
         Route::resource('leagues','Admins\LeaguesController',[
             'except'    =>  ['show']
         ]);

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admins;
 
 use App\Http\Controllers\Controller;
 use App\League;
+use App\Season;
 use App\Sport;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -79,7 +80,8 @@ class LeaguesController extends Controller
     {
         $league = League::query()->findOrFail($id);
         $sports = Sport::all();
-        return view(static::TEMPLATE_DIRECTORY . 'edit',compact('sports','league'));
+        $seasons = Season::all();
+        return view(static::TEMPLATE_DIRECTORY . 'edit',compact('sports','league','seasons'));
 
     }
 
@@ -125,6 +127,23 @@ class LeaguesController extends Controller
 
         return redirect()->route('admins.leagues.index')
             ->with('success','League Deleted');
+
+    }
+
+
+
+    public function updateSeasons(Request $request, $id)
+    {
+        $league = League::query()->findOrFail($id);
+        $season_ids = $request->get('seasons');
+
+        $league->seasons()->detach();
+        foreach ($season_ids as $season_id){
+            $season = Season::query()->findOrFail($season_id);
+            $league->seasons()->attach($season);
+        }
+
+        return redirect()->back()->with('success','League Seasons Updated');
 
     }
 

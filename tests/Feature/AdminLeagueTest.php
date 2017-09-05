@@ -52,6 +52,7 @@ class AdminLeagueTest extends TestCase
     public function can_see_leagues_on_index(){
 
         $user = $this->adminUser();
+        League::query()->delete();
         $league = factory(League::class)->create();
 
         $this->actingAs($user)->get(route('admins.leagues.index'))
@@ -64,8 +65,9 @@ class AdminLeagueTest extends TestCase
     /** @test */
     public function a_user_cannot_add_a_league_until_there_is_one_sport()
     {
-
         $user = $this->adminUser();
+
+        Sport::query()->delete();
 
         $this->actingAs($user)->get(route('admins.leagues.create'))
             ->assertRedirect(route('admins.sports.create'));

@@ -54,4 +54,14 @@ class League extends Model
         return $this->hasMany(SportsTeam::class);
     }
 
+
+    /**
+     * A League has many Seasons
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function seasons()
+    {
+        return $this->belongsToMany(Season::class);
+    }
+
 }

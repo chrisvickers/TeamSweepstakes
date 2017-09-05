@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Season;
 use App\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
@@ -34,8 +35,10 @@ class AdminGamesTest extends TestCase
     /** @test */
     public function an_admin_can_access_admin_games()
     {
-
         $user = $this->adminUser();
+
+        $game = factory(Season::class)->create();
+
         $this->actingAs($user)->get(route('admins.games.index'))
             ->assertSuccessful();
     }

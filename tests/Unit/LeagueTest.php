@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\League;
+use App\Season;
 use App\Sport;
 use App\SportsTeam;
 use Tests\TestCase;
@@ -36,6 +37,23 @@ class LeagueTest extends TestCase
 
 
         $this->assertTrue($league->teams->count() == 5);
+
+    }
+
+
+    /** @test */
+    public function a_league_contains_a_season()
+    {
+
+        $league = factory(League::class)->create();
+        $season = factory(Season::class)->create();
+
+        $league->seasons()->attach($season);
+
+
+        $this->assertTrue($league->seasons->contains(function($seasoned) use ($season){
+            return $seasoned->id == $season->id;
+        }));
 
     }
 

@@ -45,6 +45,9 @@ class AdminTeamTest extends TestCase
     public function a_user_can_see_teams()
     {
         $user = $this->adminUser();
+
+        SportsTeam::query()->delete();
+
         $team = factory(SportsTeam::class)->create();
         $this->actingAs($user)->get(route('admins.teams.index'))
             ->assertSuccessful()

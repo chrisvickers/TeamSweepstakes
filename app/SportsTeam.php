@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class SportsTeam extends Model
 {
+    use SoftDeletes;
 
     protected $table = 'sports_teams';
 
